@@ -1,0 +1,5 @@
+.gradle
+.idea
+build
+src/main/antlr/gen
+src/main/gen
