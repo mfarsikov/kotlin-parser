@@ -12,8 +12,6 @@ repositories {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.github.javaparser:javaparser-core:3.16.1")
-    implementation("com.github.javaparser:java-symbol-solver-core:0.6.3")
 
     antlr("org.antlr:antlr4:4.8-1")
 
