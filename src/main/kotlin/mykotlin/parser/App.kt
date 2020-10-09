@@ -32,7 +32,7 @@ fun main() {
     println(Json { prettyPrint = true }.encodeToString(kotlinFile))
 
     kotlinFile as AST.File
-    kotlinFile.entries.filterIsInstance<AST.KotlinClass>()
+    val classInfos = kotlinFile.entries.filterIsInstance<AST.KotlinClass>()
         .map { klass -> toClassInfo(kotlinFile, klass) }
 }
 
@@ -61,14 +61,14 @@ fun toClassInfo(file: AST.File, klass: AST.KotlinClass): ClassInfo {
         },
         klass.properties.map { prop ->
             FieldInfo(
-                FieldName(prop.name),
-                ClassName(prop.type),
+                FieldName("$qualifiedClassName;${prop.name}:${prop.type ?: "V"}"),
+                ClassName(prop.type ?: "V"),
                 prop.accessModifier.toAccessParameter(),
                 SourceCodeSnippet(prop.codeSnippet, SourceCodeLanguage.Kotlin)
             )
         },
         klass.accessModifier.toAccessParameter(),
-        klass.nestedClasses.map { nestedClass -> toClassInfo(file, klass) },
+        klass.nestedClasses.map { nestedClass -> toClassInfo(file, nestedClass) },
         SourceCodeSnippet(klass.codeSnippet, SourceCodeLanguage.Kotlin),
         false
     )
